@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { default as vElTableInfiniteScroll } from "el-table-infinite-scroll";
+// import { default as vElTableInfiniteScroll } from "el-table-infinite-scroll";
 import { message } from "@pureadmin/components";
 import { pageInfo } from "@/api/info";
 import { IconifyIconOffline } from "@/components/ReIcon";
@@ -24,31 +24,34 @@ const svg = `
 
 const table = ref([]);
 const disabled = ref(false);
-const page = ref(0);
-const total = ref(1);
+const page = ref(1);
+const total = ref(0);
 const preview = ref();
 const dataLoading = ref(true);
 const searchValue = ref("");
 
+const handleCurrentPage = (val: number) => {
+  page.value = val;
+  getInfo();
+};
+
 const getInfo = async () => {
-  if (disabled.value) return;
-  if (page.value >= total.value) return;
-  ++page.value;
   const param = { page: page.value };
   dataLoading.value = true;
   try {
     await pageInfo(param)
       .then(data => {
+        dataLoading.value = false;
         if (data.code === 200) {
-          table.value = table.value.concat(data.data.records.map(decode));
-          total.value = data.data.pages;
+          table.value = data.data.records.map(decode);
+          total.value = data.data.total;
           if (page.value >= total.value) {
             page.value = total.value;
             disabled.value = true;
           }
           return;
         }
-        message.error(data.message);
+        message.success(data.message);
         console.log(data);
       })
       .catch(error => {
@@ -69,8 +72,8 @@ const handleCurrentChange = (val: any) => {
 };
 
 const updateInfo = () => {
-  page.value = 0;
-  total.value = 1;
+  page.value = 1;
+  total.value = 0;
   disabled.value = false;
   table.value = [];
   getInfo();
@@ -114,7 +117,6 @@ onMounted(() => {
       >
         <el-scrollbar>
           <el-table
-            v-el-table-infinite-scroll="getInfo"
             :data="table"
             highlight-current-row
             :infinite-scroll-disabled="disabled"
@@ -184,6 +186,13 @@ onMounted(() => {
             </template>
           </el-table>
         </el-scrollbar>
+        <el-pagination
+          v-model:current-page="page"
+          page-size="10"
+          layout="total, prev, pager, next, jumper"
+          :total="total"
+          @current-change="handleCurrentPage"
+        />
       </div>
     </el-main>
   </el-container>
