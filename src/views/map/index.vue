@@ -424,7 +424,7 @@ const init = () => {
     },
     series: [
       {
-        name: "强震",
+        name: "地震",
         type: "scatter",
         coordinateSystem: "bmap",
         data: convertData(table.value),
@@ -446,7 +446,7 @@ const init = () => {
         }
       },
       {
-        name: "地震",
+        name: "强震",
         type: "effectScatter",
         coordinateSystem: "bmap",
         data: convertData(
