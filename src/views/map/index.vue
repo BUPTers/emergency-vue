@@ -38,7 +38,7 @@ const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>, {
 });
 
 const getInfo = async () => {
-  const param = { page: 1 };
+  const param = { page: 0 };
   dataLoading.value = true;
   try {
     await pageInfo(param)
@@ -67,6 +67,9 @@ const getInfo = async () => {
 
 const convertRecord = record => {
   let city = record.location.city;
+  if (city.at(-1) === "区") {
+    city = record.location.province;
+  }
   if (city.at(-1) === "市") {
     city = city.substring(0, city.length - 1);
   }
@@ -269,6 +272,7 @@ const geoCoordMap = {
   大庆: [125.03, 46.58]
 };
 const convertData = function (data) {
+  console.log(data);
   const res = [];
   for (let i = 0; i < data.length; i++) {
     const geoCoord = geoCoordMap[data[i].name];
