@@ -4,6 +4,8 @@ import { message } from "@pureadmin/components";
 import { idGeo, locateGeo } from "@/api/geocoding";
 import moment from "moment";
 import { addInfo } from "@/api/info";
+import type { UploadUserFile, UploadFile } from "element-plus";
+import axios from "axios";
 
 defineOptions({
   name: "EnterIndex"
@@ -174,6 +176,16 @@ const submit = async () => {
     .then(data => {
       if (data.code === 200) {
         message.success("录入成功");
+        formData.append("infoId", code);
+        axios
+          .post("https://api.cupk.club/file/upload", formData, {
+            headers: {
+              "Content-Type": "mutipart/form-data"
+            }
+          })
+          .then(res => {
+            console.log(res);
+          });
         return;
       }
 
@@ -218,6 +230,14 @@ const handleSelect = item => {
 
 const handleCondition = item => {
   targetOptions.value = target.get(item[0]);
+};
+const fileList = ref<UploadUserFile[]>([]);
+const formData = new FormData();
+const handleAvatarSuccess = (uploadFile: UploadFile) => {
+  // imageUrl.value = URL.createObjectURL(uploadFile.raw!);
+  console.log("res", uploadFile);
+  formData.append("file", uploadFile.raw);
+  console.log("formData", formData.get("file"), uploadFile.raw);
 };
 </script>
 
@@ -309,6 +329,16 @@ const handleCondition = item => {
                 style="width: 480px"
                 placeholder="请输入练习描述"
               />
+            </el-form-item>
+            <el-form-item>
+              <el-upload
+                :on-change="handleAvatarSuccess"
+                class="upload-demo"
+                v-model:file-list="fileList"
+                :auto-upload="false"
+              >
+                <el-button type="primary">上传载体</el-button>
+              </el-upload>
             </el-form-item>
           </el-form>
           <el-row justify="end">

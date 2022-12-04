@@ -42,6 +42,9 @@ const handleDel = async row => {
   try {
     await delInfo({ infoId: row.id })
       .then(data => {
+        if (data.code === 200) {
+          getInfo();
+        }
         console.log("删除", data);
       })
       .catch(error => {
