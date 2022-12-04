@@ -276,7 +276,10 @@ const convertData = function (data) {
   const res = [];
   for (let i = 0; i < data.length; i++) {
     const geoCoord = geoCoordMap[data[i].name];
-    if (geoCoord && !isNaN(data[i].value)) {
+    if (geoCoord) {
+      if (isNaN(data[i].value)) {
+        data[i].value = 1;
+      }
       res.push({
         name: data[i].name,
         value: geoCoord.concat(data[i].value)
