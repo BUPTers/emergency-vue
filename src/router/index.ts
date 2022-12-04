@@ -32,9 +32,10 @@ import homeRouter from "./modules/home";
 import remainingRouter from "./modules/remaining";
 import infoRouter from "@/router/modules/info";
 import enterRouter from "@/router/modules/enter";
+import mapRouter from "@/router/modules/map";
 
 /** 原始静态路由（未做任何处理） */
-const routes = [homeRouter, infoRouter, enterRouter];
+const routes = [homeRouter, infoRouter, enterRouter, mapRouter];
 
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
 export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(

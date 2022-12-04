@@ -5,7 +5,8 @@ import ElementPlus from "element-plus";
 import { getServerConfig } from "./config";
 import { createApp, Directive } from "vue";
 import { MotionPlugin } from "@vueuse/motion";
-// import { useEcharts } from "@/plugins/echarts";
+import { useEcharts } from "@/plugins/echarts";
+import "echarts/extension/bmap/bmap";
 // import { useTable } from "@/plugins/vxe-table";
 import { injectResponsiveStorage } from "@/utils/responsive";
 
@@ -29,6 +30,7 @@ const app = createApp(App);
 
 // 自定义指令
 import * as directives from "@/directives";
+
 Object.keys(directives).forEach(key => {
   app.directive(key, (directives as { [key: string]: Directive })[key]);
 });
@@ -39,12 +41,14 @@ import {
   IconifyIconOnline,
   FontIcon
 } from "./components/ReIcon";
+
 app.component("IconifyIconOffline", IconifyIconOffline);
 app.component("IconifyIconOnline", IconifyIconOnline);
 app.component("FontIcon", FontIcon);
 
 // 全局注册按钮级别权限组件
 import { Auth } from "@/components/ReAuth";
+
 app.component("Auth", Auth);
 
 getServerConfig(app).then(async config => {
@@ -52,8 +56,7 @@ getServerConfig(app).then(async config => {
   await router.isReady();
   injectResponsiveStorage(app, config);
   setupStore(app);
-  app.use(MotionPlugin).use(ElementPlus);
-  // .use(useEcharts);
+  app.use(MotionPlugin).use(ElementPlus).use(useEcharts);
   // .use(Table);
   // .use(PureDescriptions);
   // .use(useTable);

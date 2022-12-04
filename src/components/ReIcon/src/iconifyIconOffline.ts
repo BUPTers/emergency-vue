@@ -13,6 +13,7 @@ import Search from "@iconify-icons/ep/search";
 import Edit from "@iconify-icons/ep/edit";
 import Delete from "@iconify-icons/ep/delete";
 import EditPen from "@iconify-icons/ep/edit-pen";
+import MapLocation from "@iconify-icons/ep/map-location";
 addIcon("check", Check);
 addIcon("home-filled", HomeFilled);
 addIcon("lollipop", Lollipop);
@@ -24,6 +25,7 @@ addIcon("search", Search);
 addIcon("edit", Edit);
 addIcon("delete", Delete);
 addIcon("edit-pen", EditPen);
+addIcon("map-location", MapLocation);
 
 // remixicon
 import ArrowRightSLine from "@iconify-icons/ri/arrow-right-s-line";

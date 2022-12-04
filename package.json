@@ -57,6 +57,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "responsive-storage": "^2.1.0",
     "vue": "^3.2.40",
+    "vue-baidu-map": "^0.21.22",
     "vue-router": "^4.1.6",
     "vue-types": "^4.2.1",
     "vxe-table": "^4.3.2",

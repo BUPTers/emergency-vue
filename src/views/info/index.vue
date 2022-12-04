@@ -69,9 +69,7 @@ const getInfo = async () => {
       .then(data => {
         dataLoading.value = false;
         if (data.code === 200) {
-          console.log("data.data.records", data.data.records);
           table.value = data.data.records.map(decode);
-          console.log("table", table.value);
           total.value = data.data.total;
           if (page.value >= total.value) {
             page.value = total.value;
@@ -79,7 +77,7 @@ const getInfo = async () => {
           }
           return;
         }
-        message.success(data.message);
+        message.error(data.message);
         console.log(data);
       })
       .catch(error => {
