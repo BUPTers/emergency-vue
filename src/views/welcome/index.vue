@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { computed } from "vue";
 
 defineOptions({
@@ -50,7 +49,7 @@ let username = "Admin";
     <el-card>
       <p>第一次迭代全是Icy（徐文亮）一个人完成的，累cry……</p>
       <p>第二、三次迭代有武子涵（前端）、许振华（后端）两位同学加入帮忙……</p>
-      <p>但是剩下两个组员几乎是啥都没干，，所以进度可能赶不上捏</p>
+      <p>但是剩下两个组员几乎是啥都没干，，所以进度可能赶不上</p>
       <p>来自CUPK的码农一枚，现交流学习于BUPT，人称Icy</p>
       <p>这块白色也不知道写啥好，先预留吧。。</p>
     </el-card>

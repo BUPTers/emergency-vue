@@ -7,6 +7,7 @@ import { IconifyIconOffline } from "@/components/ReIcon";
 import { decode } from "@/utils/encode";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import Edit from "./edit.vue";
+// import axios from "axios";
 
 defineOptions({
   name: "InfoIndex"
@@ -32,6 +33,8 @@ const dataLoading = ref(true);
 const searchValue = ref("");
 const editData = ref(null);
 const isShowEdit = ref(false);
+const showImg = ref(false);
+const imgSrc = ref("");
 const handleShowEdit = (row, type) => {
   isShowEdit.value = true;
   row.type = type;
@@ -110,6 +113,27 @@ const updateInfo = () => {
 const ok = () => {
   getInfo();
 };
+//
+// const handleDownload = id => {
+//   axios
+//     .get("https://api.cupk.club/file/download?infoId=" + id, {
+//       responseType: "blob"
+//     })
+//     .then(res => {
+//       const { data } = res;
+//       const reader = new FileReader();
+//       reader.readAsDataURL(data);
+//       reader.onload = ev => {
+//         const img = new Image();
+//         img.src = ev.target.result.toString();
+//         document.body.appendChild(img);
+//       };
+//     })
+//     .catch(err => {
+//       message.error(err);
+//       console.log(err);
+//     });
+// };
 
 onMounted(() => {
   getInfo();
@@ -199,7 +223,12 @@ onMounted(() => {
                 <el-link
                   :icon="useRenderIcon('search')"
                   :underline="false"
-                  @click="handleShowEdit(scope.row, '')"
+                  @click="
+                    imgSrc =
+                      'https://api.cupk.club/file/download?infoId=' +
+                      scope.row.id;
+                    showImg = true;
+                  "
                 >
                   详情
                 </el-link>
@@ -249,6 +278,23 @@ onMounted(() => {
     :init-data="editData"
     @ok="ok"
   />
+  <el-dialog
+    title="详情预览"
+    v-model="showImg"
+    @close="showImg = false"
+    width="50%"
+    style="height: 80vh"
+  >
+    <el-row justify="center" align="middle">
+      <el-col>
+        <img
+          :src="imgSrc"
+          alt="详情预览"
+          style="object-fit: scale-down; object-position: center; height: 65vh"
+        />
+      </el-col>
+    </el-row>
+  </el-dialog>
 </template>
 
 <style lang="scss" scoped>
